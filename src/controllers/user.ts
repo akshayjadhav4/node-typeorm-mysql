@@ -76,3 +76,17 @@ export const updateUserWithId = async (req: Request, res: Response) => {
       console.log("ERROR WHILE UPDATING USER", error);
     });
 };
+
+export const deleteUser = async (req: Request, res: Response) => {
+  const userRepository = getConnection().getRepository(User);
+  await userRepository
+    .delete(req.params.id)
+    .then(() => {
+      return res.json({
+        message: "User Deleted",
+      });
+    })
+    .catch((error) => {
+      console.log("ERROR WHILE DELETING USER", error);
+    });
+};
