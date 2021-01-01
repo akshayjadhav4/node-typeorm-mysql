@@ -1,12 +1,10 @@
 import * as express from "express";
-import { Request, Response } from "express";
+import routes from "./src/routes";
 
 const app = express();
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello from / route");
-});
+app.use(routes);
 
 const PORT = 2004;
 app.listen(PORT, () => {
