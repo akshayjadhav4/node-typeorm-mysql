@@ -17,3 +17,24 @@ export const addUser = async (req: Request, res: Response) => {
       console.log("ERROR WHILE CREATING USER", error);
     });
 };
+
+export const getUser = async (req: Request, res: Response) => {
+  const userRepository = getConnection().getRepository(User);
+  await userRepository
+    .findOne(req.params.id)
+    .then((user) => {
+      if (user) {
+        return res.json({
+          result: user,
+          message: "Fetched user with id",
+        });
+      } else {
+        return res.json({
+          message: "No user with given id",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log("ERROR WHILE HETTING USER WITH ID", error);
+    });
+};
