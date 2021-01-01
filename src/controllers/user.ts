@@ -59,3 +59,20 @@ export const getAllUsers = async (req: Request, res: Response) => {
       console.log("ERROR WHILE HETTING USER All USERS", error);
     });
 };
+
+export const updateUserWithId = async (req: Request, res: Response) => {
+  const userRepository = getConnection().getRepository(User);
+  const user = await userRepository.findOne(req.params.id);
+  userRepository.merge(user, req.body);
+  await userRepository
+    .save(user)
+    .then((user) => {
+      return res.json({
+        result: user,
+        message: "User updated",
+      });
+    })
+    .catch((error) => {
+      console.log("ERROR WHILE UPDATING USER", error);
+    });
+};
