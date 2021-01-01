@@ -38,3 +38,24 @@ export const getUser = async (req: Request, res: Response) => {
       console.log("ERROR WHILE HETTING USER WITH ID", error);
     });
 };
+
+export const getAllUsers = async (req: Request, res: Response) => {
+  const userRepository = getConnection().getRepository(User);
+  const users = await userRepository
+    .find()
+    .then((users) => {
+      if (users) {
+        return res.json({
+          result: users,
+          message: "Fetched All users",
+        });
+      } else {
+        return res.json({
+          message: "No users found",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log("ERROR WHILE HETTING USER All USERS", error);
+    });
+};
